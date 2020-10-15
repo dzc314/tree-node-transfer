@@ -79,6 +79,8 @@ export default {
         let nodeSelected = false;
         if (!node.isLeaf && !node.children) {
           this.$set(node, "disabled", true);
+        } else {
+          this.$set(node, "disabled", false);
         }
         if (node.children && node.children.length) {
           this.renderSourceTree(node.children);
@@ -122,7 +124,7 @@ export default {
       if (!data.children) {
         this.$set(data, "children", []);
       }
-    //   模拟请求数据
+      //   模拟请求数据
       setTimeout(() => {
         data.children = [
           {
