@@ -1,97 +1,105 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" @click="showData"/>
-    <TreeNodeTransfer :source="source" :target="target" />
+    <img alt="Vue logo" src="./assets/logo.png" @click="showData" />
+    <!-- <TreeNodeTransfer :source="source" :target="target" /> -->
+    <EleTreeTransfer
+      ref="treeTransfer"
+      :source="source"
+      :target="target"
+      target-is-array
+      class="transfer"
+    />
   </div>
 </template>
 
 <script>
-import TreeNodeTransfer from "./components/TreeNodeTransfer.vue";
-
+// import EleTreeTransfer from './components/EleTreeTransfer.vue'
+import '@dzc314/ele-tree-transfer'
+import '@dzc314/ele-tree-transfer/dist/ele-tree-transfer.css'
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    TreeNodeTransfer,
+    // EleTreeTransfer,
   },
   data() {
     return {
-      source: [
+      source: [],
+      target: [],
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.source = [
         {
-          code: 1,
-          parendCode: null,
-          isLeaf:false,
-          name: "一级",
+          id: 1,
+          parentId: null,
+          name: '一级',
           children: [
             {
-              code: 2,
-              parendCode: 1,
-              isLeaf:false,
-              name: "二级1",
+              id: 2,
+              parentId: 1,
+              name: '二级1',
               children: [
                 {
-                  code: 3,
-                  parendCode: 2,
-                  isLeaf:false,
-                  name: "三级1.1",
-                  children: []
+                  id: 3,
+                  parentId: 2,
+                  name: '三级1.1',
+                  children: [],
                 },
                 {
-                  code: 4,
-                  parendCode: 2,
-                  isLeaf:false,
-                  name: "三级1.2",
+                  id: 4,
+                  parentId: 2,
+                  name: '三级1.2',
                 },
               ],
             },
             {
-              code: 5,
-              parendCode: 1,
-              isLeaf:false,
-              name: "二级2",
+              id: 5,
+              parentId: 1,
+              name: '二级2',
               children: [
                 {
-                  code: 6,
-                  parendCode: 2,
-                  isLeaf:false,
-                  name: "三级2.1",
+                  id: 6,
+                  parentId: 5,
+                  name: '三级2.1',
                 },
                 {
-                  code: 7,
-                  parendCode: 2,
-                  isLeaf:false,
-                  name: "三级2.2",
+                  id: 7,
+                  parentId: 5,
+                  name: '三级2.2',
                 },
               ],
             },
             {
-              code: 8,
-              parendCode: 1,
-              isLeaf:false,
-              name: "二级3",
-              children: []
+              id: 8,
+              parentId: 1,
+              name: '二级3',
+              children: [],
             },
           ],
         },
-      ],
-      target: [
-        {
-          code: 8,
-          parendCode: 1,
-          isLeaf:false,
-          name: "二级3",
-        },
-      ],
-    };
+      ]
+      
+    }, 1000)
+    setTimeout(() => {
+      this.target = [
+        { id: 1, parentId: null, name: '一级' },
+        { id: 2, parentId: 1, name: '二级1' },
+        { id: 4, parentId: 2, name: '三级1.2' },
+        { id: 44, parentId: 22, name: '三级1.2' },
+      ]
+    }, 500);
   },
   methods: {
     showData() {
-      console.log(this.target);
-    }
-  }
-};
+      console.log(this.target)
+      console.log(this.$refs.treeTransfer.rightData);
+    },
+  },
+}
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -99,5 +107,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  .transfer {
+    height: 100px;
+  }
 }
 </style>
